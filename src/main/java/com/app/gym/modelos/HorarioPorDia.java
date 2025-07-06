@@ -10,9 +10,11 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
+import jakarta.persistence.Table;
 
 @Entity
-public class HorariosPorDia {
+@Table(name = "horarios_por_dia") // Nombre de la tabla en la base de datos
+public class HorarioPorDia {
     
     /*
      * Esta clase representa los horarios de apertura y cierre del gimnasio por día.

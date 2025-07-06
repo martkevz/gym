@@ -1,5 +1,5 @@
 package com.app.gym.servicios;
 
-public class HorariosPorDiaServicio {
+public class HorarioPorDiaServicio {
     
 }
