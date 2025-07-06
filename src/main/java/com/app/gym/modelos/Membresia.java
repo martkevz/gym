@@ -12,7 +12,7 @@ import jakarta.persistence.Table;
 
 @Entity
 @Table(name = "membresias")
-public class Membresias {
+public class Membresia {
     /*  
      *  Esta tabla almacena los planes disponibles para pagar en el gimnasio y sus precios ------------------------------------
      */
