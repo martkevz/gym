@@ -11,7 +11,6 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
-import jakarta.persistence.criteria.CriteriaBuilder.In;
 
 @Entity
 @Table(name = "productos") // Nombre de la tabla en la base de datos
@@ -55,9 +54,16 @@ public class Producto {
      * Esta relacionada muchos a uno con Venta, un producto puede aparecer en muchas ventas, --------------------------------
      * y cada venta está asociada a un único producto. (da la pk a Ventas)
      */
-    @OneToMany(mappedBy = "idProducto", cascade = CascadeType.ALL) // "producto" es el linker
+    @OneToMany(mappedBy = "producto", cascade = CascadeType.ALL) // "producto" es el linker
     private List<Venta> venta ;// Objeto de la tabla a la que damos la pk
     
+    /*  
+     *  Constructor por defecto ------------------------------------------------------------------------------------------------
+     */
+    public Producto() {
+        // Constructor por defecto
+    }
+
     /*  
      *  Getters y setters ----------------------------------------------------------------------------------------------------
      */
@@ -113,6 +119,7 @@ public class Producto {
      *  Métodos adicionales --------------------------------------------------------------------------------------------
      */
     // Método para mostrar la información del producto
+    @Override
     public String toString() {
         return "Producto{" +
                 "idProducto=" + idProducto +
