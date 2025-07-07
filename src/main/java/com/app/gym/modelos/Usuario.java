@@ -3,6 +3,7 @@ package com.app.gym.modelos;
 import java.sql.Date;
 import java.util.List;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -65,7 +66,7 @@ public class Usuario {
      * Se utiliza @OneToMany para establecer una relación uno a muchos con la entidad
      * venta, donde cada usuario puede tener varias ventas registradas.
      */
-    @OneToMany(mappedBy = "usuario")
+    @OneToMany(mappedBy = "usuario", cascade = CascadeType.ALL)
     private List<Venta> venta;
 
     /*
@@ -75,7 +76,7 @@ public class Usuario {
      * con la entidad asistencia_general, donde cada usuario puede tener varias asistencias
      * asociadas.
      */
-    @OneToMany(mappedBy = "usuario")
+    @OneToMany(mappedBy = "usuario", cascade = CascadeType.ALL)
     private List<AsistenciaGeneral> asistenciaGeneral;
 
     /*
@@ -85,7 +86,7 @@ public class Usuario {
      * con la entidad clase_aerobica, donde cada usuario puede tener varias clases
      * aeróbicas asociadas.
      */
-    @OneToMany(mappedBy = "usuario")
+    @OneToMany(mappedBy = "usuario", cascade = CascadeType.ALL)
     private List<ClaseAerobica> claseAerobica;
 
     /*
@@ -96,15 +97,14 @@ public class Usuario {
     public Usuario() {
     }
 
-
     // Getters y Setters
     public Integer getIdUsuario() {
         return idUsuario;
     }
 
-
-
     public void setIdUsuario(Integer idUsuario) {
+        this.idUsuario = idUsuario;
+    }
 
     public String getNombre() {
         return nombre;
@@ -157,7 +157,6 @@ public class Usuario {
     public Membresia getMembresia() {
         return membresia;
     }
-
 
     public void setMembresia(Membresia membresia) {
         this.membresia = membresia;
