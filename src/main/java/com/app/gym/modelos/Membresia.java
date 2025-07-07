@@ -50,6 +50,13 @@ public class Membresia {
     private Usuario usuario; //objeto de la tabla a la que damos la pk 
 
     /*  
+     *  Constructor por defecto ------------------------------------------------------------------------------------------------
+     */
+    public Membresia() {
+        // Constructor por defecto
+    }
+
+    /*  
      *  Getters y setters  ----------------------------------------------------------------------------------------------------
      */
     public Integer getIdMembresia() {
@@ -88,6 +95,7 @@ public class Membresia {
      *  Métodos adicionales --------------------------------------------------------------------------------------------
      */
     // Método para mostrar la información de la membresía
+    @Override
     public String toString() {
         return "Membresias{" +
                 "idMembresia=" + idMembresia +
