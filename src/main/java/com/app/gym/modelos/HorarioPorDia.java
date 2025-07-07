@@ -53,7 +53,7 @@ public class HorarioPorDia {
      * Se utiliza CascadeType.ALL para que las operaciones de persistencia se propaguen a las entidades relacionadas.
      */
     @OneToMany(mappedBy = "horarioPorDia", cascade = CascadeType.ALL)
-    private List<ClasesAerobicas> clasesAerobicas;
+    private List<ClaseAerobica> claseAerobica;
 
     // Getters y Setters
 
@@ -87,7 +87,23 @@ public class HorarioPorDia {
 
     public void setHoraCierre(LocalTime horaCierre) {
         this.horaCierre = horaCierre;
-    }    
+    }
+
+    public List<AsistenciaGeneral> getAsistenciaGeneral() {
+        return asistenciaGeneral;
+    }
+
+    public void setAsistenciaGeneral(List<AsistenciaGeneral> asistenciaGeneral) {
+        this.asistenciaGeneral = asistenciaGeneral;
+    }
+
+    public List<ClaseAerobica> getClaseAerobica() {
+        return claseAerobica;
+    }
+
+    public void setClaseAerobica(List<ClaseAerobica> claseAerobica) {
+        this.claseAerobica = claseAerobica;
+    }
 
     // Método toString para facilitar la visualización de los datos 
     @Override
