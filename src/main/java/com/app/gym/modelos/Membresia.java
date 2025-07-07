@@ -2,6 +2,7 @@ package com.app.gym.modelos;
 
 import java.math.BigDecimal;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -11,14 +12,14 @@ import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 
 @Entity
-@Table(name = "membresias")
+@Table(name = "membresias") // Nombre de la tabla en la base de datos
 public class Membresia {
     /*  
      *  Esta tabla almacena los planes disponibles para pagar en el gimnasio y sus precios ------------------------------------
      */
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY) //
+    @GeneratedValue(strategy = GenerationType.IDENTITY) // Generación automática del ID de membresía
     @Column(name = "id_membresia", nullable = false)
     private Integer idMembresia; 
 
@@ -45,8 +46,8 @@ public class Membresia {
      * Relación con otras entidades:
      * Esta relaciona uno a uno con Usuarios, donde cada usuario puede tener una membresía. (da la pk a Usuarios)------------
      */
-    @OneToOne(mappedBy = "membresia") //"membresia" es el linker
-    private Usuarios usuario; //objeto de la tabla a la que damos la pk 
+    @OneToOne(mappedBy = "membresia", cascade = CascadeType.ALL) //"membresia" es el linker
+    private Usuario usuario; //objeto de la tabla a la que damos la pk 
 
     /*  
      *  Getters y setters  ----------------------------------------------------------------------------------------------------
