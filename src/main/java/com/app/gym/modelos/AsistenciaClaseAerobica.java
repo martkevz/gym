@@ -33,7 +33,7 @@ public class AsistenciaClaseAerobica {
      * donde múltiples asistencias pueden estar asociadas a una sola clase aeróbica.
      */
     @ManyToOne
-    @JoinColumn(name = "id_clase_aerobica", referencedColumnName = "id_clase", nullable = false)
+    @JoinColumn(name = "id_clase", referencedColumnName = "id_clase", nullable = false)
     private ClaseAerobica claseAerobica;
 
     /*
