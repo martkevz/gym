@@ -79,16 +79,6 @@ public class Usuario {
     private List<AsistenciaGeneral> asistenciaGeneral;
 
     /*
-     * Relación con la entidad Clase Aeróbica.
-     * Esta relación indica que un usuario puede estar inscrito en múltiples clases
-     * aeróbicas. Se utiliza @OneToMany para establecer una relación uno a muchos
-     * con la entidad clase_aerobica, donde cada usuario puede tener varias clases
-     * aeróbicas asociadas.
-     */
-    @OneToMany(mappedBy = "usuario", cascade = CascadeType.ALL)
-    private List<ClaseAerobica> claseAerobica;
-
-    /*
      * Constructor vacío requerido por JPA.
      * Este constructor es necesario para que JPA pueda crear instancias de la
      * entidad Usuario al recuperar datos de la base de datos.
@@ -175,14 +165,6 @@ public class Usuario {
 
     public void setAsistenciaGeneral(List<AsistenciaGeneral> asistenciaGeneral) {
         this.asistenciaGeneral = asistenciaGeneral;
-    }
-
-    public List<ClaseAerobica> getClaseAerobica() {
-        return claseAerobica;
-    }
-
-    public void setClaseAerobica(List<ClaseAerobica> claseAerobica) {
-        this.claseAerobica = claseAerobica;
     }
 
     /* Método toString para facilitar la visualización de los datos

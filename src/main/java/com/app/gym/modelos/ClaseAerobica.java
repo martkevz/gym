@@ -47,7 +47,7 @@ public class ClaseAerobica {
      */
     @ManyToOne
     @JoinColumn(name = "id_horario", referencedColumnName = "id_horario", nullable = false) // name (nombre para la columna), referencedColumnName (es la columna que hago referencia de la otra tabla).
-    private List<HorarioPorDia> horarioPorDia; // objeto de la tabla a la que damos la pk (El linker)
+    private HorarioPorDia horarioPorDia; // objeto de la tabla a la que damos la pk (El linker)
 
     @OneToMany(mappedBy = "claseAerobica") // "claseAeroica" es el nombre del linker en la entidad AsistenciaClaseAerobica
     private List<AsistenciaClaseAerobica> asistenciaClaseAerobica; // objeto de la tabla a la que damos la pk
@@ -91,11 +91,11 @@ public class ClaseAerobica {
         this.horaFin = horaFin;
     }
 
-    public List<HorarioPorDia> getHorarioPorDia() {
+    public HorarioPorDia getHorarioPorDia() {
         return horarioPorDia;
     }
 
-    public void setHorarioPorDia(List<HorarioPorDia> horarioPorDia) {
+    public void setHorarioPorDia(HorarioPorDia horarioPorDia) {
         this.horarioPorDia = horarioPorDia;
     }
 
