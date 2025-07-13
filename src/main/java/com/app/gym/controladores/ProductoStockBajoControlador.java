@@ -25,6 +25,8 @@ public class ProductoStockBajoControlador {
      * Obtiene una lista de productos cuyo stock es igual o menor a 10 unidades.
      * 
      * @return Lista de productos con stock bajo.
+     * Si la lista está vacía, retorna un 404 Not Found.
+     * Si hay productos con stock bajo, retorna un 200 OK con la lista.
      */
     @GetMapping
     public ResponseEntity<List<ProductoStockBajo>> listarProductosStockBajo(){

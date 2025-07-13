@@ -1,6 +1,9 @@
 package com.app.gym.controladores;
 
 import java.util.List;
+
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -39,19 +42,36 @@ public class UsuarioActivoControlador {
      * Endpoint GET /api/usuarios-activos/activos
      *
      * @return lista de usuarios con membresía activa
+     * si la lista está vacía, retorna un 404 Not Found
+     * si hay usuarios activos, retorna un 200 OK con la lista de usuarios activos
      */
     @GetMapping("/activos")
-    public List<UsuarioActivo> listarActivos() {
-        return svc.activos();
+    public ResponseEntity<List<UsuarioActivo>> listarActivos() {
+
+        List<UsuarioActivo> activos = svc.activos();
+
+        if(activos.isEmpty()){
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);        
+        }
+
+        return ResponseEntity.ok(activos);
     }
 
     /**
      * Endpoint GET /api/usuarios-activos/vencidos
      *
      * @return lista de usuarios con membresía vencida
+     * si la lista está vacía, retorna un 404 Not Found
+     * si hay usuarios vencidos, retorna un 200 OK con la lista
      */
     @GetMapping("/vencidos")
-    public List<UsuarioActivo> listarVencidos() {
-        return svc.vencidos();
+    public ResponseEntity<List<UsuarioActivo>> listarVencidos() {
+
+        List<UsuarioActivo> vencidos = svc.vencidos();
+
+        if (vencidos.isEmpty()){
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
+        }
+        return ResponseEntity.ok(vencidos);
     }
 }
