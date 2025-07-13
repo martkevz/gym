@@ -2,6 +2,8 @@ package com.app.gym.controladores;
 
 import java.util.List;
 
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -25,12 +27,19 @@ public class UsuarioPorMembresiaControlador {
     }
 
     /**
-     * Endpoint GET /api/usuarios-por-membresia
+     * Endpoint GET /api/usuarios-membresias
      *
      * @return resumen de usuarios agrupado por membresía
+     * Si la lista está vacía, retorna un 404 Not Found.
+     * Si hay usuarios, retorna un 200 OK con la lista de usuarios por membresia.
      */
     @GetMapping
-    public List<UsuarioPorMembresia> listarUsuariosPorMembresias (){
-        return servicio.obtenerUsuariosPorMembresias();
+    public ResponseEntity<List<UsuarioPorMembresia>> listarUsuariosPorMembresias (){
+        List<UsuarioPorMembresia> upm = servicio.obtenerUsuariosPorMembresias();
+
+        if(upm.isEmpty()){
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
+        }
+        return ResponseEntity.ok(upm);
     }
 }
