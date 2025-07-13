@@ -32,8 +32,9 @@ public class ProductoStockBajoControlador {
 
         if(productos.isEmpty()){
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
-        } else {
-            return ResponseEntity.ok(productos);
-        }
+        } 
+        
+        return ResponseEntity.ok(productos);
+        
     }
 }
