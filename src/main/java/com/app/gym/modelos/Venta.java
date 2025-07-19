@@ -5,8 +5,6 @@ import java.time.LocalDate;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity; 
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.IdClass;
 import jakarta.persistence.JoinColumn;
@@ -24,9 +22,8 @@ public class Venta {
      * fecha de la venta.
      * Esta clase es una entidad JPA y se mapea a la tabla "ventas"
      */
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id_venta", nullable = false)
+    @Id  
+    @Column(name = "id_venta", nullable = false) // Generamos el Id manualmente en la BD por ser una PK compuesta 
     private Integer idVenta; 
 
     /**
@@ -49,6 +46,12 @@ public class Venta {
      */
     @Column(nullable = false, precision = 5, scale = 2)
     private BigDecimal total;
+
+    /* Indica si la venta está anulada (soft-delete)
+     * Este campo es opcional y se utiliza para marcar una venta como anulada sin eliminarla de la base de datos.
+     */
+    @Column(nullable = false)
+    public Boolean anulada = false; 
 
     //Relación con otras entidades: -----------------------------------------------------------------------------
 
@@ -115,6 +118,14 @@ public class Venta {
 
     public void setProducto(Producto producto) {
         this.producto = producto;
+    }
+
+    public Boolean getAnulada() {
+        return anulada;
+    }
+
+    public void setAnulada(Boolean anulada) {
+        this.anulada = anulada;
     }
 
     /* Método toString para facilitar la visualización de los datos
