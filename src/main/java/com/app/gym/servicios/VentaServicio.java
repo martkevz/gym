@@ -16,6 +16,8 @@ import com.app.gym.modelos.Usuario;
 import com.app.gym.modelos.Venta;
 import com.app.gym.repositorios.VentaRepositorio;
 
+import jakarta.persistence.EntityManager;
+
 import org.springframework.transaction.annotation.Transactional;
 
 import com.app.gym.dtos.VentaCrearDto;
@@ -32,15 +34,18 @@ public class VentaServicio {
     private final VentaRepositorio ventaRepositorio;
     private final UsuarioRepositorio usuarioRepositorio;
     private final ProductoRepositorio productoRepositorio;
+    private final EntityManager entityManager; // Inyecta el EntityManager para operaciones de persistencia
     /**
      * Constructor del servicio de ventas.
      *
      * @param repositorio el repositorio de ventas
      */
-    public VentaServicio(VentaRepositorio ventaRepositorio, UsuarioRepositorio usuarioRepositorio, ProductoRepositorio productoRepositorio) {
+    public VentaServicio(VentaRepositorio ventaRepositorio, UsuarioRepositorio usuarioRepositorio, ProductoRepositorio productoRepositorio, EntityManager entityManager) {
         this.ventaRepositorio = ventaRepositorio;
         this.usuarioRepositorio = usuarioRepositorio; 
         this.productoRepositorio = productoRepositorio; 
+        this.entityManager = entityManager; // Inicializa el EntityManager
+
     }
 
      // ------------------------------------------------------------------
@@ -82,8 +87,18 @@ public class VentaServicio {
         venta.setProducto(producto); // Asociar el producto a la venta
         // El total se calculará automáticamente por el trigger en la base de datos
 
+        /*
+        * Guardar y forzar sincronización con la BD
+        * es importante usar `saveAndFlush` para asegurarnos de que la operación de guardado se sincronice inmediatamente con la base de datos, 
+        * de modo que el refresh pueda obtener los cambios.
+        */
+        Venta ventaGuardada = ventaRepositorio.saveAndFlush(venta);
 
-        return ventaRepositorio.save(venta); // Guardar la venta en la base de datos
+        // Refrescar después de guardar
+        entityManager.refresh(ventaGuardada);
+        
+        // Retornar la venta guardada
+        return ventaGuardada;
     }
 
     // ------------------------------------------------------------------
@@ -115,7 +130,17 @@ public class VentaServicio {
             venta.setAnulada(true);;
         }
         
-        return ventaRepositorio.save(venta);
+        // Guardar y forzar sincronización
+        // con la base de datos para asegurarnos de que los cambios se reflejen inmediatamente
+        // y luego refrescar la entidad para obtener los datos actualizados.
+        Venta ventaActualizada = ventaRepositorio.saveAndFlush(venta);
+        
+        // Refrescar después de guardar
+        entityManager.refresh(ventaActualizada);
+        
+        // Retornar la venta actualizada
+        // Esto asegura que la venta tenga los datos más recientes después de la actualización
+        return ventaActualizada;
     }
 
     // ------------------------------------------------------------------
