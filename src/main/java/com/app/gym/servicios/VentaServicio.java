@@ -48,7 +48,7 @@ public class VentaServicio {
 
     }
 
-     // ------------------------------------------------------------------
+    // ------------------------------------------------------------------
     // Operaciones de creación
     // ------------------------------------------------------------------
 
@@ -67,6 +67,8 @@ public class VentaServicio {
         // Verificar si el producto existe
         Producto producto = productoRepositorio.findById(dto.getIdProducto())
                                                 .orElseThrow(()-> new RecursoNoEncontradoExcepcion("Producto no encontrado con ID: " + dto.getIdProducto()));
+        
+        // Si la fecha no se proporciona, usar la fecha actual:
         LocalDate fecha = dto.getFecha() != null ? dto.getFecha() : LocalDate.now();
     
         // 1. Calcular rango del mes (partición)
@@ -75,6 +77,11 @@ public class VentaServicio {
         LocalDate finMes = yearMonth.atEndOfMonth();
     
         // 2. Obtener el máximo ID en ese mes
+        /*  
+         * Obtener el máximo ID de asistencia en el mes actual (el cual lo calcula con la fecha "inicioMes" y "finMes" dadas al metodo).
+         * Esto permite que las asistencias se registren de manera secuencial por mes.
+         * Si no hay asistencias, se iniciará con ID 1. 
+         */
         Integer maxId = ventaRepositorio.findMaxIdVentaByMonth(inicioMes, finMes);
         int nuevoId = (maxId != null) ? maxId + 1 : 1; // Si es null, empezar en 1
 
@@ -82,7 +89,7 @@ public class VentaServicio {
         Venta venta = new Venta();
         venta.setIdVenta(nuevoId); // Asignar ID manual
         venta.setCantidad(dto.getCantidad()); // Establecer la cantidad de productos vendidos
-        venta.setFecha(dto.getFecha() != null ? dto.getFecha() : LocalDate.now()); // Usar la fecha proporcionada o la fecha actual si no se proporciona
+        venta.setFecha(fecha); // Usar la fecha proporcionada o la fecha actual si no se proporciona
         venta.setUsuario(usuario); // Asociar el usuario a la venta
         venta.setProducto(producto); // Asociar el producto a la venta
         // El total se calculará automáticamente por el trigger en la base de datos
@@ -198,12 +205,11 @@ public class VentaServicio {
 
     /**
      * Convierte una entidad Venta a un DTO de respuesta.
-     *
+     * Este método crea un DTO que contiene los detalles de la venta, incluyendo el usuario y el producto asociados.
      * @param v la entidad Venta a convertir
      * @return el DTO de respuesta correspondiente
      */
     public VentaResponseDTO toResponseDTO(Venta v){
-        
         UsuarioSimpleDTO u = new UsuarioSimpleDTO();
         u.setIdUsuario(v.getUsuario().getIdUsuario());
         u.setNombre(v.getUsuario().getNombre());
@@ -223,7 +229,7 @@ public class VentaServicio {
         r.setUsuario(u);
         r.setProducto(p);
 
-        return r;
+        return r; // Retorna el DTO de respuesta con los datos de la venta
     }
 
     /**

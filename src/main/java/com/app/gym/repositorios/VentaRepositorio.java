@@ -40,11 +40,10 @@ public interface VentaRepositorio extends JpaRepository<Venta, VentaId> {
     List<Venta> findByRangoFechas (@Param("inicio") LocalDate inicio, @Param("fin")LocalDate fin);
 
     /**
-     * Busca todas las ventas realizadas en un mes específico.
-     *
-     * @param inicio el primer día del mes
-     * @param fin el último día del mes
-     * @return una lista de ventas realizadas en ese mes
+     * Crear el id manualmente para las ventas en un mes específico.
+     * @param inicio la fecha de inicio del mes
+     * @param fin la fecha de fin del mes  
+     * @return el ID máximo de venta encontrado en el mes, o 0 si no hay ventas
      */
     @Query(value = "SELECT COALESCE(MAX(v.id_venta), 0) FROM ventas v WHERE v.fecha BETWEEN :inicio AND :fin", nativeQuery = true)
     Integer findMaxIdVentaByMonth(@Param("inicio") LocalDate inicio, @Param("fin") LocalDate fin);
