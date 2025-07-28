@@ -2,6 +2,12 @@ package com.app.gym.dtos;
 
 public class UsuarioSimpleDTO {
     
+    /*
+     * Esta clase es un DTO (Data Transfer Object) que representa un usuario de manera
+     * simplificada, sin las relaciones con otras entidades.
+     * Se utiliza para transferir datos entre la capa de servicio y la capa de presentación.
+     */
+
     private Integer idUsuario;
     private String nombre;
     private String apellido;

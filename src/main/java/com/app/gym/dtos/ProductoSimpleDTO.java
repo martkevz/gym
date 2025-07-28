@@ -4,6 +4,12 @@ import java.math.BigDecimal;
 
 public class ProductoSimpleDTO {
     
+    /*
+     * Esta clase es un DTO (Data Transfer Object) que representa un producto de manera
+     * simplificada, sin las relaciones con otras entidades.
+     * Se utiliza para transferir datos entre la capa de servicio y la capa de presentación.
+     */
+
     private Integer idProducto;
     private String nombre;
     private BigDecimal precio;

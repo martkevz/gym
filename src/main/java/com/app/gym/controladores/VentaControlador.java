@@ -48,18 +48,22 @@ public class VentaControlador {
      * @return la venta registrada o un error si hay problemas de validación
      */
     @PostMapping("/registrar")
-    public ResponseEntity<?> registrarVenta(@Valid @RequestBody VentaCrearDto dto, BindingResult br) {
+    public ResponseEntity<?> registrarVenta(@Valid @RequestBody VentaCrearDto dto, BindingResult br) { //@valid valida las notaciones (como @NotNull) del DTO
 
+        // Verifica si hay errores de validación en el objeto 'br'
         if (br.hasErrors()) {
+            // Si hay errores, los recoge y los convierte en una lista de cadenas formateadas mediante "stream()"
             List<String> errores = br.getFieldErrors().stream()
-                    .map(e -> e.getField() + ": " + e.getDefaultMessage())
-                    .toList();
+                    .map(e -> e.getField() + ": " + e.getDefaultMessage()) // Mapea cada error a una cadena con el formato "campo: mensaje de error"
+                    .toList(); // Convierte el stream en una lista
+
+            // Retorna una respuesta HTTP con el estado 400 (Bad Request) y el cuerpo con los errores de validación
             return ResponseEntity.badRequest().body(Map.of("errores", errores));
         }
 
         Venta ventas = ventaServicio.registrarVenta(dto);
 
-        return ResponseEntity.status(HttpStatus.CREATED).body(ventaServicio.toResponseDTO(ventas));
+        return ResponseEntity.status(HttpStatus.CREATED).body(ventaServicio.toResponseDTO(ventas)); // Si no hay errores, continua con la lógica normal
     }
 
     /*--------------------------------------------------------------
